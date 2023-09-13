@@ -43,7 +43,7 @@
 #include <ArduinoJson.h>
 
 
-SoftwareSerial nodemcu(D6, D5);
+SoftwareSerial nodemcu(D10, D9);
 
 //Timer to run Arduino code every 5 seconds
 unsigned long previousMillis = 0;
