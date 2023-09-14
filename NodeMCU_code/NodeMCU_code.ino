@@ -44,11 +44,7 @@
 
 
 SoftwareSerial nodemcu(D10, D9);
-
-//Timer to run Arduino code every 5 seconds
-unsigned long previousMillis = 0;
-unsigned long currentMillis;
-const unsigned long period = 10000;  
+ 
 
 void setup() {
   // Initialize Serial port
@@ -60,10 +56,7 @@ void setup() {
 }
 
 void loop() {
-  //Get current time
-  currentMillis = millis();
 
-  if ((currentMillis - previousMillis >= period)) {
 
   StaticJsonDocument<1000> doc;
   DeserializationError error = deserializeJson(doc, nodemcu);
@@ -74,35 +67,28 @@ void loop() {
     delay(500);
     DeserializationError error = deserializeJson(doc, nodemcu);
   }
-
+  
+  float hum = doc["humidity"]; 
+  float temp = doc["temperature"]; 
+  int rain = doc["isRainy"];
+  
   Serial.print("Recieved Humidity:  ");
-  float hum = doc["humidity"];
   Serial.println(hum);
+  Serial.print("Recieved Temperature:  ");
+  Serial.println(temp);
+  Serial.print("Recieved RainSensor:  ");
+  Serial.println(rain);
 
   Blynk.virtualWrite(V0, hum);
-
-  Serial.print("Recieved Temperature:  ");
-  float temp = doc["temperature"];
-  Serial.println(temp);
-
   Blynk.virtualWrite(V1, temp);
 
-  Serial.print("Recieved RainSensor:  ");
-  int rain = doc["isRainy"];
-  Serial.println(rain);
-  
-
-  if(hum>50) {
+  if(hum > 50) {
     Blynk.logEvent("humidity", "Humidity is too high");
   }
-  if(temp>30) {
+  if(temp > 30) {
     Blynk.logEvent("temperature", "Temperature is too high");
   }
-  if(rain==0){
+  if(rain == 0) {
     Blynk.logEvent("israiny", "It is raining");
-  }
-
-
-previousMillis = previousMillis + period;
   }
 }
