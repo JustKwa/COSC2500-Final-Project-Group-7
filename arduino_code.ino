@@ -17,7 +17,16 @@ float hum;
 
 //Initialisation of Rain Sensor
 int rainSensorPin = 7;
+int rainSensorData;
+
+//Buzzer pin
 int buzzerPin = 4;
+
+
+//Initialisation of Voltage Sensor
+float volt;
+int voltSensorPin = A0;
+int voltSensorData;
 
 void setup() {
   pinMode(rainSensorPin, INPUT);
@@ -28,16 +37,16 @@ void setup() {
   nodemcu.begin(9600);
   delay(1000);
 
-  Serial.println("Program started");
 }
 
 void loop() {
 
-  int rainSensor = digitalRead(rainSensorPin);
-  Serial.println(rainSensor);
-
-
   StaticJsonDocument<1000> doc;
+
+  voltSensorData = analogRead(voltSensorPin);
+  volt = voltSensorData / 5.0 * 20.0;
+  
+  rainSensorData = digitalRead(rainSensorPin);
 
   //Obtain Temp and Hum data
   hum = dht.readHumidity();
@@ -50,7 +59,8 @@ void loop() {
   //Assign collected data to JSON Object
   doc["humidity"] = hum;
   doc["temperature"] = temp;
-  doc["isRainy"] = sensorData;
+  doc["voltage"] = volt;
+  doc["isRainy"] = rainSensorData;
 
   //alert with buzzer and led
   if(rainSensor == 0 || hum > 70 || temp > 40){
