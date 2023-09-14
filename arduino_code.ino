@@ -40,7 +40,12 @@ void loop() {
   StaticJsonDocument<1000> doc;
 
   //Obtain Temp and Hum data
-  dht11_func();
+  hum = dht.readHumidity();
+  temp = dht.readTemperature();
+  Serial.print("Humidity: ");
+  Serial.println(hum);
+  Serial.print("Temperature: ");
+  Serial.println(temp);
 
   //Assign collected data to JSON Object
   doc["humidity"] = hum;
@@ -60,13 +65,5 @@ void loop() {
   delay(500);
 }
 
-void dht11_func() {
 
-  hum = dht.readHumidity();
-  temp = dht.readTemperature();
-  Serial.print("Humidity: ");
-  Serial.println(hum);
-  Serial.print("Temperature: ");
-  Serial.println(temp);
 
-}
