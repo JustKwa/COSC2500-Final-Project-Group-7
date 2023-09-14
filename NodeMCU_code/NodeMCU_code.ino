@@ -50,7 +50,6 @@ void setup() {
   // Initialize Serial port
   Serial.begin(9600);
   nodemcu.begin(9600);
-  while (!Serial) continue;
 
   BlynkEdgent.begin();
 }
@@ -69,18 +68,22 @@ void loop() {
   }
   
   float hum = doc["humidity"]; 
-  float temp = doc["temperature"]; 
+  float temp = doc["temperature"];
+  float volt = doc["voltage"];
   int rain = doc["isRainy"];
   
   Serial.print("Recieved Humidity:  ");
   Serial.println(hum);
   Serial.print("Recieved Temperature:  ");
   Serial.println(temp);
+  Serial.print("Recieved Voltage:  ");
+  Serial.println(volt);
   Serial.print("Recieved RainSensor:  ");
   Serial.println(rain);
 
   Blynk.virtualWrite(V0, hum);
   Blynk.virtualWrite(V1, temp);
+  Blynk.virtualWrite(V2, volt);
 
   if(hum > 50) {
     Blynk.logEvent("humidity", "Humidity is too high");
