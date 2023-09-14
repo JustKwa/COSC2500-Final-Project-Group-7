@@ -15,11 +15,12 @@ DHT dht(DHTPIN, DHT11);
 float temp;
 float hum;
 
-int sensorPin = 7;
+//Initialisation of Rain Sensor
+int rainSensorPin = 7;
 int buzzerPin = 4;
 
 void setup() {
-  pinMode(sensorPin, INPUT);
+  pinMode(rainSensorPin, INPUT);
   pinMode(buzzerPin, OUTPUT);
   Serial.begin(9600);
 
@@ -32,15 +33,8 @@ void setup() {
 
 void loop() {
 
-  int sensorData = digitalRead(sensorPin);
-  Serial.println(sensorData);
-
-  if(sensorData == 0){
-    digitalWrite(buzzerPin,HIGH);
-  }else{
-    digitalWrite(buzzerPin,LOW);
-  }
-  delay(1000);
+  int rainSensor = digitalRead(rainSensorPin);
+  Serial.println(rainSensor);
 
 
   StaticJsonDocument<1000> doc;
@@ -52,6 +46,14 @@ void loop() {
   doc["humidity"] = hum;
   doc["temperature"] = temp;
   doc["isRainy"] = sensorData;
+
+  //alert with buzzer and led
+  if(rainSensor == 0 || hum > 70 || temp > 40){
+    digitalWrite(buzzerPin,HIGH);
+  }else{
+    digitalWrite(buzzerPin,LOW);
+  }
+  delay(1000);
 
   //Send data to NodeMCU
   serializeJson(doc, nodemcu);
