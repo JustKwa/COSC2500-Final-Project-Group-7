@@ -45,6 +45,8 @@ void loop() {
 
   voltSensorData = analogRead(voltSensorPin);
   volt = voltSensorData / 5.0 * 20.0;
+  Serial.print("Voltage: ");
+  Serial.println(volt);
   
   rainSensorData = digitalRead(rainSensorPin);
 
