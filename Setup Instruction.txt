@@ -1,0 +1,17 @@
+
+arduino code:
+tải 'Arduinojson by Benoit Blanchon' trong library manager 
+
+tải 'DHT sensor library' + 'Adafruit Unified Sensor' by Adafruit trong library manager
+
+nodeMCU code:
+tải 'Blynk' trong lib manager
+
+Sử dụng File/example/Blynk 'Blynk.Edgent-Edgent_ESP8266' để include lib
+
+Trong 'BlynkEdgent.h', xóa '#include "user_interface,h"' ở dòng 3
+
+Thêm http://arduino.esp8266.com/stable/package_esp8266com_index.json vào phần "Additional boards manager URLs" trong File/Preferences(vì Arduino ko hỗ trợ board của NodeMCU)
+
+Vào Tool/Board Manager, tải 'esp8266 by ESP8266 community'
+
