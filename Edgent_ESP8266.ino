@@ -37,8 +37,10 @@
 //#define USE_WITTY_CLOUD_BOARD
 //#define USE_WEMOS_D1_MINI
 
+//Use example Blynk.Edgent/Edgent_ESP8266 to include lib
 #include "BlynkEdgent.h"
-//DHT11 Lib
+
+//Install 'DHT sensor library' + 'Adafruit Unified Sensor' in lib manager to use dht sensor
 #include <DHT.h>
 
 //Initialisation of DHT11 Sensor
