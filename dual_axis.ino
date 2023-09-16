@@ -1,4 +1,6 @@
+//install 'Servo' lib in lib manager
 #include <Servo.h>
+
 //defining Servos for horizontal movement
 Servo servoHori;
 int servoHoriPos = 0;
